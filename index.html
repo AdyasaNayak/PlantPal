@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlantPal - AI Plant Care Companion</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <h1>PlantPal</h1>
+        <p>Your AI house plant care companion.</p>
+      </aside>
+
+      <main class="chat-section">
+        <header class="chat-header">
+          <div>
+            <h2>Ask PlantPal</h2>
+            <p>Get help with watering, sunlight, pests, and plant problems.</p>
+          </div>
+          <button id="themeToggle">Dark Mode</button>
+        </header>
+
+        <section id="chatMessages" class="chat-messages">
+          <div class="message bot">
+            Hi! I'm PlantPal. Ask me anything about your house plants.
+          </div>
+        </section>
+
+        <form id="chatForm" class="chat-form">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Ask about your plant..."
+            autocomplete="off"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
