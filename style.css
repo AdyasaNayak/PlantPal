@@ -1,54 +1,54 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    font-family: Arial, sans-serif;
-    background: #eef5ee;
-    color: #1f2a24;
+body {
+  font-family: Arial, sans-serif;
+  background: #eef5ee;
+  color: #1f2a24;
 }
 
-.app{
-    min-height: 100vh;
-    display: flex;
+.app {
+  min-height: 100vh;
+  display: flex;
 }
 
-.sidebar{
-    width: 280px;
-    background: #234f36;
-    color: white;
-    padding: 32px 24px;
+.sidebar {
+  width: 280px;
+  background: #234f36;
+  color: white;
+  padding: 32px 24px;
 }
 
-.sidebar h1{
-    font-size: 32px;
-    margin-bottom: 12px;
+.sidebar h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
 }
 
-.sidebar p{
-    color: #d7eadc;
-    line-height: 1.5;
+.sidebar p {
+  color: #d7eadc;
+  line-height: 1.5;
 }
 
-.chat-section{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
 }
 
-.chat-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.chat-header h2{
-    font-size; 28px;
-    margin-bottom: 6px;
+.chat-header h2 {
+  font-size: 28px;
+  margin-bottom: 6px;
 }
 
 .chat-header p {
@@ -134,4 +134,37 @@ body{
   .message {
     max-width: 90%;
   }
+}
+
+body.dark-mode {
+  background: #111914;
+  color: #edf7ef;
+}
+
+body.dark-mode .chat-section {
+  background: #111914;
+}
+
+body.dark-mode .chat-messages {
+  background: #18231d;
+  box-shadow: none;
+}
+
+body.dark-mode .chat-header p {
+  color: #a9b8ad;
+}
+
+body.dark-mode .message.bot {
+  background: #26382d;
+  color: #edf7ef;
+}
+
+body.dark-mode .chat-form input {
+  background: #18231d;
+  border-color: #385242;
+  color: #edf7ef;
+}
+
+body.dark-mode .chat-form input::placeholder {
+  color: #91a397;
 }
