@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <button
+      class="menu-button global-menu-button"
+      id="menuButton"
+      type="button"
+      aria-label="Open menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
     <button id="themeToggle" class="global-theme-toggle" type="button">
       Dark Mode
     </button>
@@ -15,7 +26,8 @@
       <nav class="sidebar-nav">
         <h3>Explore</h3>
 
-        <button type="button" class="nav-item active">Ask PlantPal</button>
+        <button type="button" class="nav-item active" id="sidebarHomeButton">Home</button>
+        <button type="button" class="nav-item" id="sidebarAskButton">Ask PlantPal</button>
         <button type="button" class="nav-item">Diagnose a Problem</button>
         <button type="button" class="nav-item">Find your Houseplant</button>
         <button type="button" class="nav-item">Care Guide</button>
@@ -41,17 +53,7 @@
 
     <section class="landing-page">
       <header class="landing-header">
-        <button
-          class="menu-button"
-          id="menuButton"
-          type="button"
-          aria-label="Open menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
+        <span></span>
         <p class="landing-logo">PlantPal</p>
       </header>
 

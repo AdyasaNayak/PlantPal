@@ -1,5 +1,7 @@
 const homeButton = document.getElementById("homeButton");
 const startChatButton = document.getElementById("startChatButton");
+const sidebarHomeButton = document.getElementById("sidebarHomeButton");
+const sidebarAskButton = document.getElementById("sidebarAskButton");
 const appLayout = document.querySelector(".app");
 const landingPage = document.querySelector(".landing-page");
 const menuButton = document.getElementById("menuButton");
@@ -44,9 +46,7 @@ chatForm.addEventListener("submit", function (event) {
 });
 
 homeButton.addEventListener("click", function () {
-  appLayout.classList.add("hidden");
-  landingPage.classList.remove("hidden");
-  sidebar.classList.remove("open");
+  showLandingPage();
 });
 
 themeToggle.addEventListener("click", function () {
@@ -64,9 +64,15 @@ menuButton.addEventListener("click", function () {
 });
 
 startChatButton.addEventListener("click", function () {
-  landingPage.classList.add("hidden");
-  appLayout.classList.remove("hidden");
-  sidebar.classList.remove("open");
+  showChatPage();
+});
+
+sidebarHomeButton.addEventListener("click", function () {
+  showLandingPage();
+});
+
+sidebarAskButton.addEventListener("click", function () {
+  showChatPage();
 });
 
 const promptMap = {
@@ -144,4 +150,28 @@ function sendPrompt(prompt) {
 
     addMessage(randomReply, "bot");
   }, 900);
+}
+
+function showLandingPage() {
+  appLayout.classList.add("hidden");
+  landingPage.classList.remove("hidden");
+  sidebar.classList.remove("open");
+
+  setActiveNav(sidebarHomeButton);
+}
+
+function showChatPage() {
+  landingPage.classList.add("hidden");
+  appLayout.classList.remove("hidden");
+  sidebar.classList.remove("open");
+
+  setActiveNav(sidebarAskButton);
+}
+
+function setActiveNav(activeButton) {
+  navItems.forEach(function (item) {
+    item.classList.remove("active");
+  });
+
+  activeButton.classList.add("active");
 }
