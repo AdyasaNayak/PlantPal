@@ -335,12 +335,34 @@ body {
   color: #5f6f64;
 }
 
-#themeToggle {
-  border: none;
-  background: #234f36;
-  color: white;
+.chat-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+#homeButton {
+  position: fixed;
+  top: 24px;
+  right: 250px;
+  z-index: 40;
+  border: 1px solid #234f36;
+  background: #ffffff;
+  color: #234f36;
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.global-theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 140px;
+  z-index: 40;
+  border: 1px solid #234f36;
+  background: #ffffff;
+  color: #234f36;
+  padding: 10px 14px;
+  border-radius: 999px;
   cursor: pointer;
 }
 
@@ -419,6 +441,59 @@ body {
 body.dark-mode {
   background: #111914;
   color: #edf7ef;
+}
+
+body.dark-mode .landing-page {
+  background: #111914;
+  color: #edf7ef;
+}
+
+body.dark-mode .landing-frame {
+  background: #18231d;
+  border-color: #d7eadc;
+}
+
+body.dark-mode .landing-logo,
+body.dark-mode .landing-content h1 {
+  color: #d7eadc;
+}
+
+body.dark-mode .eyebrow,
+body.dark-mode .landing-subtitle {
+  color: #a9b8ad;
+}
+
+body.dark-mode .landing-actions button {
+  border-color: #d7eadc;
+  color: #d7eadc;
+}
+
+body.dark-mode .landing-actions button:hover {
+  background: #d7eadc;
+  color: #111914;
+}
+
+body.dark-mode .menu-button,
+body.dark-mode .global-theme-toggle {
+  background: #18231d;
+  border-color: #d7eadc;
+  color: #edf7ef;
+}
+
+body.dark-mode #homeButton {
+  background: #18231d;
+  border-color: #d7eadc;
+  color: #edf7ef;
+}
+
+body.dark-mode .menu-button span {
+  background: #d7eadc;
+}
+
+body.dark-mode .corner-vine,
+body.dark-mode .leaf,
+body.dark-mode .corner-flower span {
+  border-color: #d7eadc;
 }
 
 body.dark-mode .chat-section {

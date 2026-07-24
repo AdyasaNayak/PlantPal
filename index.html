@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <button id="themeToggle" class="global-theme-toggle" type="button">
+      Dark Mode
+    </button>
+
     <aside class="sidebar drawer-sidebar" id="sidebar">
       <nav class="sidebar-nav">
         <h3>Explore</h3>
@@ -81,7 +85,7 @@
           </p>
 
           <div class="landing-actions">
-            <button type="button">Ask PlantPal</button>
+            <button type="button" id = "startChatButton">Ask PlantPal</button>
             <button type="button">Diagnose</button>
             <button type="button">Care Guide</button>
             <button type="button">Watering Plan</button>
@@ -97,7 +101,9 @@
             <h2>Ask PlantPal</h2>
             <p>Get help with watering, sunlight, pests, and plant problems.</p>
           </div>
-          <button id="themeToggle">Dark Mode</button>
+          <div class="chat-header-actions">
+            <button id="homeButton" type="button">Home</button>
+          </div>
         </header>
 
         <section id="chatMessages" class="chat-messages">

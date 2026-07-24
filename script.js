@@ -1,3 +1,6 @@
+const homeButton = document.getElementById("homeButton");
+const startChatButton = document.getElementById("startChatButton");
+const appLayout = document.querySelector(".app");
 const landingPage = document.querySelector(".landing-page");
 const menuButton = document.getElementById("menuButton");
 const sidebar = document.getElementById("sidebar");
@@ -40,6 +43,12 @@ chatForm.addEventListener("submit", function (event) {
   }, 900);
 });
 
+homeButton.addEventListener("click", function () {
+  appLayout.classList.add("hidden");
+  landingPage.classList.remove("hidden");
+  sidebar.classList.remove("open");
+});
+
 themeToggle.addEventListener("click", function () {
   document.body.classList.toggle("dark-mode");
 
@@ -52,6 +61,12 @@ themeToggle.addEventListener("click", function () {
 
 menuButton.addEventListener("click", function () {
   sidebar.classList.toggle("open");
+});
+
+startChatButton.addEventListener("click", function () {
+  landingPage.classList.add("hidden");
+  appLayout.classList.remove("hidden");
+  sidebar.classList.remove("open");
 });
 
 const promptMap = {
