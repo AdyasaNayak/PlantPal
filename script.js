@@ -1,23 +1,39 @@
 const homeButton = document.getElementById("homeButton");
 const startChatButton = document.getElementById("startChatButton");
+const startDiagnoseButton = document.getElementById("startDiagnoseButton");
+const startCareGuideButton = document.getElementById("startCareGuideButton");
+const startWateringButton = document.getElementById("startWateringButton");
 const sidebarHomeButton = document.getElementById("sidebarHomeButton");
 const sidebarAskButton = document.getElementById("sidebarAskButton");
+const sidebarDiagnoseButton = document.getElementById("sidebarDiagnoseButton");
+const sidebarFindPlantButton = document.getElementById("sidebarFindPlantButton");
+const sidebarCareGuideButton = document.getElementById("sidebarCareGuideButton");
+const sidebarWateringButton = document.getElementById("sidebarWateringButton");
+const sidebarPetSafetyButton = document.getElementById("sidebarPetSafetyButton");
 const appLayout = document.querySelector(".app");
 const landingPage = document.querySelector(".landing-page");
+const featurePages = document.querySelectorAll(".feature-page");
+const diagnosePage = document.getElementById("diagnosePage");
+const findPlantPage = document.getElementById("findPlantPage");
+const careGuidePage = document.getElementById("careGuidePage");
+const wateringPage = document.getElementById("wateringPage");
+const petSafetyPage = document.getElementById("petSafetyPage");
 const menuButton = document.getElementById("menuButton");
 const sidebar = document.getElementById("sidebar");
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatMessages = document.getElementById("chatMessages");
 const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.querySelector(".theme-icon");
 const navItems = document.querySelectorAll(".nav-item");
-const topicButtons = document.querySelectorAll(".topic-btn");
+const pageHomeButtons = document.querySelectorAll(".page-home-button");
 
 const savedTheme = localStorage.getItem("plantpal-theme");
 
 if(savedTheme === "dark") {
   document.body.classList.add("dark-mode");
-  themeToggle.textContent = "Light Mode";
+  themeIcon.textContent = "☼";
+  themeToggle.setAttribute("aria-label", "Switch to light mode");
 }
 
 const plantReplies = [
@@ -60,20 +76,35 @@ themeToggle.addEventListener("click", function () {
   document.body.classList.toggle("dark-mode");
 
   if (document.body.classList.contains("dark-mode")) {
-    themeToggle.textContent = "Light Mode";
+    themeIcon.textContent = "☼";
+    themeToggle.setAttribute("aria-label", "Switch to light mode");
     localStorage.setItem("plantpal-theme", "dark");
   } else {
-    themeToggle.textContent = "Dark Mode";
+    themeIcon.textContent = "◐";
+    themeToggle.setAttribute("aria-label", "Switch to dark mode");
     localStorage.setItem("plantpal-theme", "light");
   }
 });
 
 menuButton.addEventListener("click", function () {
   sidebar.classList.toggle("open");
+  menuButton.classList.toggle("open");
 });
 
 startChatButton.addEventListener("click", function () {
   showChatPage();
+});
+
+startDiagnoseButton.addEventListener("click", function () {
+  showFeaturePage(diagnosePage, sidebarDiagnoseButton);
+});
+
+startCareGuideButton.addEventListener("click", function () {
+  showFeaturePage(careGuidePage, sidebarCareGuideButton);
+});
+
+startWateringButton.addEventListener("click", function () {
+  showFeaturePage(wateringPage, sidebarWateringButton);
 });
 
 sidebarHomeButton.addEventListener("click", function () {
@@ -84,35 +115,43 @@ sidebarAskButton.addEventListener("click", function () {
   showChatPage();
 });
 
-const promptMap = {
-  "Ask PlantPal": "How can you help me take care of my houseplants?",
-  "Diagnose a Problem":
-    "My plant looks unhealthy. Can you help me diagnose the problem?",
-  "Find your Houseplant": "Can you help me identify what houseplant I have?",
-  "Care Guide": "Can you give me a beginner-friendly houseplant care guide?",
-  "Watering Schedule":
-    "Can you help me create a watering schedule for my plant?",
-  "Pet Safety": "Can you tell me which common houseplants are safe for pets?",
-  "Yellow Leaves": "Why are my plant leaves turning yellow?",
-  "Brown Tips": "Why are the tips of my plant leaves turning brown?",
-  Overwatering: "How do I know if I am overwatering my plant?",
-  "Low Light plants": "What are the best low light houseplants for beginners?",
-};
+sidebarDiagnoseButton.addEventListener("click", function () {
+  showFeaturePage(diagnosePage, sidebarDiagnoseButton);
+});
+
+sidebarFindPlantButton.addEventListener("click", function () {
+  showFeaturePage(findPlantPage, sidebarFindPlantButton);
+});
+
+sidebarCareGuideButton.addEventListener("click", function () {
+  showFeaturePage(careGuidePage, sidebarCareGuideButton);
+});
+
+sidebarWateringButton.addEventListener("click", function () {
+  showFeaturePage(wateringPage, sidebarWateringButton);
+});
+
+sidebarPetSafetyButton.addEventListener("click", function () {
+  showFeaturePage(petSafetyPage, sidebarPetSafetyButton);
+});
+
+pageHomeButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    showLandingPage();
+  });
+});
 
 navItems.forEach(function (button) {
   button.addEventListener("click", function () {
+    if (button.id) {
+      return;
+    }
+
     navItems.forEach(function (item) {
       item.classList.remove("active");
     });
 
     button.classList.add("active");
-  });
-});
-
-topicButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    const prompt = promptMap[button.textContent.trim()];
-    sendPrompt(prompt);
   });
 });
 
@@ -142,29 +181,12 @@ function removeTypingMessage() {
   }
 }
 
-function sendPrompt(prompt) {
-  if (!prompt) {
-    return;
-  }
-
-  addMessage(prompt, "user");
-
-  showTypingMessage();
-
-  setTimeout(function () {
-    removeTypingMessage();
-
-    const randomReply =
-      plantReplies[Math.floor(Math.random() * plantReplies.length)];
-
-    addMessage(randomReply, "bot");
-  }, 900);
-}
-
 function showLandingPage() {
   appLayout.classList.add("hidden");
   landingPage.classList.remove("hidden");
+  hideFeaturePages();
   sidebar.classList.remove("open");
+  menuButton.classList.remove("open");
 
   setActiveNav(sidebarHomeButton);
 }
@@ -172,9 +194,28 @@ function showLandingPage() {
 function showChatPage() {
   landingPage.classList.add("hidden");
   appLayout.classList.remove("hidden");
+  hideFeaturePages();
   sidebar.classList.remove("open");
+  menuButton.classList.remove("open");
 
   setActiveNav(sidebarAskButton);
+}
+
+function showFeaturePage(page, activeButton) {
+  landingPage.classList.add("hidden");
+  appLayout.classList.add("hidden");
+  hideFeaturePages();
+  page.classList.remove("hidden");
+  sidebar.classList.remove("open");
+  menuButton.classList.remove("open");
+
+  setActiveNav(activeButton);
+}
+
+function hideFeaturePages() {
+  featurePages.forEach(function (page) {
+    page.classList.add("hidden");
+  });
 }
 
 function setActiveNav(activeButton) {

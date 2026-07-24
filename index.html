@@ -18,8 +18,13 @@
       <span></span>
     </button>
 
-    <button id="themeToggle" class="global-theme-toggle" type="button">
-      Dark Mode
+    <button
+      id="themeToggle"
+      class="global-theme-toggle"
+      type="button"
+      aria-label="Switch to dark mode"
+    >
+      <span class="theme-icon" aria-hidden="true">◐</span>
     </button>
 
     <aside class="sidebar drawer-sidebar" id="sidebar">
@@ -28,21 +33,12 @@
 
         <button type="button" class="nav-item active" id="sidebarHomeButton">Home</button>
         <button type="button" class="nav-item" id="sidebarAskButton">Ask PlantPal</button>
-        <button type="button" class="nav-item">Diagnose a Problem</button>
-        <button type="button" class="nav-item">Find your Houseplant</button>
-        <button type="button" class="nav-item">Care Guide</button>
-        <button type="button" class="nav-item">Watering Schedule</button>
-        <button type="button" class="nav-item">Pet Safety</button>
+        <button type="button" class="nav-item" id="sidebarDiagnoseButton">Diagnose a Problem</button>
+        <button type="button" class="nav-item" id="sidebarFindPlantButton">Find your Houseplant</button>
+        <button type="button" class="nav-item" id="sidebarCareGuideButton">Care Guide</button>
+        <button type="button" class="nav-item" id="sidebarWateringButton">Watering Schedule</button>
+        <button type="button" class="nav-item" id="sidebarPetSafetyButton">Pet Safety</button>
       </nav>
-
-      <div class="quick-topics">
-        <h3>Quick Topics</h3>
-
-        <button type="button" class="topic-btn">Yellow Leaves</button>
-        <button type="button" class="topic-btn">Brown Tips</button>
-        <button type="button" class="topic-btn">Overwatering</button>
-        <button type="button" class="topic-btn">Low Light plants</button>
-      </div>
 
       <div class="coming-soon">
         <h3>Coming Soon</h3>
@@ -88,9 +84,9 @@
 
           <div class="landing-actions">
             <button type="button" id = "startChatButton">Ask PlantPal</button>
-            <button type="button">Diagnose</button>
-            <button type="button">Care Guide</button>
-            <button type="button">Watering Plan</button>
+            <button type="button" id="startDiagnoseButton">Diagnose</button>
+            <button type="button" id="startCareGuideButton">Care Guide</button>
+            <button type="button" id="startWateringButton">Watering Plan</button>
           </div>
         </div>
       </div>
@@ -104,7 +100,9 @@
             <p>Get help with watering, sunlight, pests, and plant problems.</p>
           </div>
           <div class="chat-header-actions">
-            <button id="homeButton" type="button">Home</button>
+            <button id="homeButton" type="button" aria-label="Go home">
+              <span class="home-icon" aria-hidden="true">⌂</span>
+            </button>
           </div>
         </header>
 
@@ -125,6 +123,76 @@
         </form>
       </main>
     </div>
+
+    <section class="feature-page hidden" id="diagnosePage">
+      <button class="page-home-button" type="button" aria-label="Go home">
+        <span class="home-icon" aria-hidden="true">⌂</span>
+      </button>
+
+      <div class="feature-panel">
+        <p class="eyebrow">Plant Health</p>
+        <h1>Diagnose a Problem</h1>
+        <p>
+          A guided plant problem checker will live here soon.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-page hidden" id="findPlantPage">
+      <button class="page-home-button" type="button" aria-label="Go home">
+        <span class="home-icon" aria-hidden="true">⌂</span>
+      </button>
+
+      <div class="feature-panel">
+        <p class="eyebrow">Plant Finder</p>
+        <h1>Find Your Houseplant</h1>
+        <p>
+          A plant search and identification helper will live here soon.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-page hidden" id="careGuidePage">
+      <button class="page-home-button" type="button" aria-label="Go home">
+        <span class="home-icon" aria-hidden="true">⌂</span>
+      </button>
+
+      <div class="feature-panel">
+        <p class="eyebrow">Care Basics</p>
+        <h1>Care Guide</h1>
+        <p>
+          Beginner-friendly care guides will live here soon.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-page hidden" id="wateringPage">
+      <button class="page-home-button" type="button" aria-label="Go home">
+        <span class="home-icon" aria-hidden="true">⌂</span>
+      </button>
+
+      <div class="feature-panel">
+        <p class="eyebrow">Care Routine</p>
+        <h1>Watering Schedule</h1>
+        <p>
+          Personalized watering plans will live here soon.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-page hidden" id="petSafetyPage">
+      <button class="page-home-button" type="button" aria-label="Go home">
+        <span class="home-icon" aria-hidden="true">⌂</span>
+      </button>
+
+      <div class="feature-panel">
+        <p class="eyebrow">Home Safety</p>
+        <h1>Pet Safety</h1>
+        <p>
+          Pet-safe plant guidance will live here soon.
+        </p>
+      </div>
+    </section>
 
     <script src="script.js"></script>
   </body>
