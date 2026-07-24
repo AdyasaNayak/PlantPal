@@ -13,6 +13,13 @@ const themeToggle = document.getElementById("themeToggle");
 const navItems = document.querySelectorAll(".nav-item");
 const topicButtons = document.querySelectorAll(".topic-btn");
 
+const savedTheme = localStorage.getItem("plantpal-theme");
+
+if(savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggle.textContent = "Light Mode";
+}
+
 const plantReplies = [
   "Most houseplants prefer watering only when the top inch of soil feels dry.",
   "Yellow leaves can happen because of overwatering, poor drainage, low light, or normal aging.",
@@ -54,8 +61,10 @@ themeToggle.addEventListener("click", function () {
 
   if (document.body.classList.contains("dark-mode")) {
     themeToggle.textContent = "Light Mode";
+    localStorage.setItem("plantpal-theme", "dark");
   } else {
     themeToggle.textContent = "Dark Mode";
+    localStorage.setItem("plantpal-theme", "light");
   }
 });
 
