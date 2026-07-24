@@ -7,11 +7,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <aside class="sidebar drawer-sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <h3>Explore</h3>
+
+        <button type="button" class="nav-item active">Ask PlantPal</button>
+        <button type="button" class="nav-item">Diagnose a Problem</button>
+        <button type="button" class="nav-item">Find your Houseplant</button>
+        <button type="button" class="nav-item">Care Guide</button>
+        <button type="button" class="nav-item">Watering Schedule</button>
+        <button type="button" class="nav-item">Pet Safety</button>
+      </nav>
+
+      <div class="quick-topics">
+        <h3>Quick Topics</h3>
+
+        <button type="button" class="topic-btn">Yellow Leaves</button>
+        <button type="button" class="topic-btn">Brown Tips</button>
+        <button type="button" class="topic-btn">Overwatering</button>
+        <button type="button" class="topic-btn">Low Light plants</button>
+      </div>
+
+      <div class="coming-soon">
+        <h3>Coming Soon</h3>
+        <p>My Plants</p>
+        <p>Care Reminders</p>
+      </div>
+    </aside>
+
     <section class="landing-page">
       <header class="landing-header">
         <button
           class="menu-button"
-          id="menubutton"
+          id="menuButton"
           type="button"
           aria-label="Open menu"
         >
@@ -20,17 +48,36 @@
           <span></span>
         </button>
 
-        <p class="landing-frame"></p>
+        <p class="landing-logo">PlantPal</p>
       </header>
 
       <div class="landing-frame">
+        <div class="corner-vine top-left">
+          <span class="leaf leaf-one"></span>
+          <span class="leaf leaf-two"></span>
+          <span class="leaf leaf-three"></span>
+        </div>
+
+        <div class="corner-flower top-right">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="corner-flower bottom-left">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <div class="landing-content">
-          <p class="eyebrow">AI Plant Care Companion</p>
+          <p class="eyebrow">Plant Care Corner</p>
 
           <h1>PlantPal</h1>
 
           <p class="landing-subtitle">
-            Your AI guide to happier, healthier houseplants.
+            Your guide to happier, healthier houseplants.
           </p>
 
           <div class="landing-actions">
@@ -43,40 +90,7 @@
       </div>
     </section>
 
-    <div class="app">
-      <aside class="sidebar">
-        <div class="brand">
-          <h1>PlantPal</h1>
-          <p>Your AI house plant care companion.</p>
-        </div>
-
-        <nav class="sidebar-nav">
-          <h3>Explore</h3>
-
-          <button type="button" class="nav-item active">Ask PlantPal</button>
-          <button type="button" class="nav-item">Diagnose a Problem</button>
-          <button type="button" class="nav-item">Find your Houseplant</button>
-          <button type="button" class="nav-item">Care Guide</button>
-          <button type="button" class="nav-item">Watering Schedule</button>
-          <button type="button" class="nav-item">Pet Safety</button>
-        </nav>
-
-        <div class="quick-topics">
-          <h3>Quick Topics</h3>
-
-          <button type="button" class="topic-btn">Yellow Leaves</button>
-          <button type="button" class="topic-btn">Brown Tips</button>
-          <button type="button" class="topic-btn">Overwatering</button>
-          <button type="button" class="topic-btn">Low Light plants</button>
-        </div>
-
-        <div class="coming-soon">
-          <h3>Coming Soon</h3>
-          <p>My Plants</p>
-          <p>Care Reminders</p>
-        </div>
-      </aside>
-
+    <div class="app hidden">
       <main class="chat-section">
         <header class="chat-header">
           <div>

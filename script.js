@@ -1,3 +1,6 @@
+const landingPage = document.querySelector(".landing-page");
+const menuButton = document.getElementById("menuButton");
+const sidebar = document.getElementById("sidebar");
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatMessages = document.getElementById("chatMessages");
@@ -45,6 +48,10 @@ themeToggle.addEventListener("click", function () {
   } else {
     themeToggle.textContent = "Dark Mode";
   }
+});
+
+menuButton.addEventListener("click", function () {
+  sidebar.classList.toggle("open");
 });
 
 const promptMap = {

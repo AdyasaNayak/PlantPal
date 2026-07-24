@@ -1,4 +1,99 @@
-.hidden {
+.landing-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.corner-vine {
+  position: absolute;
+  width: 180px;
+  height: 120px;
+  border-top: 2px solid #234f36;
+  border-left: 2px solid #234f36;
+  border-top-left-radius: 80px;
+  opacity: 0.8;
+}
+
+.corner-vine.top-left {
+  top: 28px;
+  left: 28px;
+}
+
+.leaf {
+  position: absolute;
+  width: 28px;
+  height: 14px;
+  border: 2px solid #234f36;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.leaf-one {
+  top: 14px;
+  left: 68px;
+  transform: rotate(28deg);
+}
+
+.leaf-two {
+  top: 44px;
+  left: 108px;
+  transform: rotate(-24deg);
+}
+
+.leaf-three {
+  top: 78px;
+  left: 46px;
+  transform: rotate(35deg);
+}
+
+.corner-flower {
+  position: absolute;
+  width: 86px;
+  height: 86px;
+}
+
+.corner-flower.top-right {
+  top: 42px;
+  right: 54px;
+}
+
+.corner-flower.bottom-left {
+  bottom: 42px;
+  left: 54px;
+}
+
+.corner-flower span {
+  position: absolute;
+  width: 32px;
+  height: 46px;
+  border: 2px solid #234f36;
+  border-radius: 50%;
+  background: transparent;
+  left: 27px;
+  top: 20px;
+  transform-origin: center bottom;
+}
+
+.corner-flower span:nth-child(1) {
+  transform: rotate(0deg) translateY(-14px);
+}
+
+.corner-flower span:nth-child(2) {
+  transform: rotate(90deg) translateY(-14px);
+}
+
+.corner-flower span:nth-child(3) {
+  transform: rotate(180deg) translateY(-14px);
+}
+
+.corner-flower span:nth-child(4) {
+  transform: rotate(270deg) translateY(-14px);
+}
+
+.app.hidden {
+  display: none;
+}
+
+.landing-page.hidden {
   display: none;
 }
 
@@ -29,6 +124,8 @@
   border-radius: 12px;
   background: #ffffff;
   cursor: pointer;
+  position: relative;
+  z-index: 30;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,6 +221,20 @@ body {
   color: white;
   padding: 32px 24px;
   overflow-y: auto;
+}
+
+.drawer-sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  height: 100vh;
+  padding-top: 96px;
+  z-index: 20;
+  transition: left 0.3s ease;
+}
+
+.drawer-sidebar.open {
+  left: 0;
 }
 
 .sidebar h1 {
@@ -291,7 +402,7 @@ body {
   }
 
   .sidebar {
-    width: 100%;
+    width: 280px;
   }
 
   .chat-header {
