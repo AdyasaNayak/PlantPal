@@ -1,3 +1,106 @@
+.hidden {
+  display: none;
+}
+
+.landing-page {
+  min-height: 100vh;
+  background: #f3f8f1;
+  padding: 24px;
+  color: #1f2a24;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.landing-logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #234f36;
+}
+
+.menu-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #c8d8cc;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-button span {
+  width: 20px;
+  height: 2px;
+  background: #234f36;
+  border-radius: 999px;
+}
+
+.landing-frame {
+  min-height: calc(100vh - 120px);
+  border: 2px solid #234f36;
+  border-radius: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 24px;
+  background: #fbfdf9;
+}
+
+.landing-content {
+  max-width: 760px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #5f6f64;
+  margin-bottom: 16px;
+}
+
+.landing-content h1 {
+  font-size: 72px;
+  color: #234f36;
+  margin-bottom: 12px;
+}
+
+.landing-subtitle {
+  font-size: 22px;
+  color: #5f6f64;
+  margin-bottom: 32px;
+}
+
+.landing-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.landing-actions button {
+  border: 1px solid #234f36;
+  background: transparent;
+  color: #234f36;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.landing-actions button:hover {
+  background: #234f36;
+  color: white;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
