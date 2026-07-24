@@ -1,92 +1,6 @@
 .landing-frame {
   position: relative;
-  overflow: hidden;
-}
-
-.corner-vine {
-  position: absolute;
-  width: 180px;
-  height: 120px;
-  border-top: 2px solid #234f36;
-  border-left: 2px solid #234f36;
-  border-top-left-radius: 80px;
-  opacity: 0.8;
-}
-
-.corner-vine.top-left {
-  top: 28px;
-  left: 28px;
-}
-
-.leaf {
-  position: absolute;
-  width: 28px;
-  height: 14px;
-  border: 2px solid #234f36;
-  border-radius: 50%;
-  background: transparent;
-}
-
-.leaf-one {
-  top: 14px;
-  left: 68px;
-  transform: rotate(28deg);
-}
-
-.leaf-two {
-  top: 44px;
-  left: 108px;
-  transform: rotate(-24deg);
-}
-
-.leaf-three {
-  top: 78px;
-  left: 46px;
-  transform: rotate(35deg);
-}
-
-.corner-flower {
-  position: absolute;
-  width: 86px;
-  height: 86px;
-}
-
-.corner-flower.top-right {
-  top: 42px;
-  right: 54px;
-}
-
-.corner-flower.bottom-left {
-  bottom: 42px;
-  left: 54px;
-}
-
-.corner-flower span {
-  position: absolute;
-  width: 32px;
-  height: 46px;
-  border: 2px solid #234f36;
-  border-radius: 50%;
-  background: transparent;
-  left: 27px;
-  top: 20px;
-  transform-origin: center bottom;
-}
-
-.corner-flower span:nth-child(1) {
-  transform: rotate(0deg) translateY(-14px);
-}
-
-.corner-flower span:nth-child(2) {
-  transform: rotate(90deg) translateY(-14px);
-}
-
-.corner-flower span:nth-child(3) {
-  transform: rotate(180deg) translateY(-14px);
-}
-
-.corner-flower span:nth-child(4) {
-  transform: rotate(270deg) translateY(-14px);
+  overflow: visible;
 }
 
 .app.hidden {
@@ -103,7 +17,7 @@
 
 .landing-page {
   min-height: 100vh;
-  background: #f3f8f1;
+  background: #f4f0df;
   padding: 24px;
   color: #1f2a24;
 }
@@ -126,7 +40,7 @@
   height: 44px;
   border: 1px solid #c8d8cc;
   border-radius: 12px;
-  background: #ffffff;
+  background: #fbf7e8;
   cursor: pointer;
   position: relative;
   z-index: 30;
@@ -173,13 +87,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 48px 24px;
-  background: #fbfdf9;
+  padding: 0;
+  background: #fffaf0;
 }
 
 .landing-content {
-  max-width: 760px;
-  text-align: center;
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-copy {
+  text-align: left;
+  position: relative;
+  min-height: 100%;
+  padding: 150px 72px 64px;
+  overflow: visible;
 }
 
 .eyebrow {
@@ -204,7 +131,7 @@
 
 .landing-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 14px;
   flex-wrap: wrap;
 }
@@ -224,9 +151,19 @@
   color: white;
 }
 
+.hero-plant-visual {
+  position: relative;
+  align-self: stretch;
+  min-height: 100%;
+  border-left: 2px solid #234f36;
+  border-radius: 0 26px 26px 0;
+  background: url("assets/plant-corner.jpeg") center 45% / cover;
+  overflow: visible;
+}
+
 .feature-page {
   min-height: 100vh;
-  background: #f3f8f1;
+  background: #f4f0df;
   color: #1f2a24;
   padding: 120px 24px 48px;
 }
@@ -236,7 +173,7 @@
   margin: 0 auto;
   border: 2px solid #234f36;
   border-radius: 28px;
-  background: #fbfdf9;
+  background: #fffaf0;
   padding: 64px 48px;
   text-align: center;
 }
@@ -261,7 +198,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #eef5ee;
+  background: #f4f0df;
   color: #1f2a24;
 }
 
@@ -392,7 +329,7 @@ body {
   width: 44px;
   height: 44px;
   border: 1px solid #234f36;
-  background: #ffffff;
+  background: #fbf7e8;
   color: #234f36;
   padding: 0;
   border-radius: 999px;
@@ -415,7 +352,7 @@ body {
   width: 44px;
   height: 44px;
   border: 1px solid #234f36;
-  background: #ffffff;
+  background: #fbf7e8;
   color: #234f36;
   padding: 0;
   border-radius: 999px;
@@ -432,7 +369,7 @@ body {
 
 .chat-messages {
   flex: 1;
-  background: white;
+  background: #fffaf0;
   border-radius: 16px;
   padding: 20px;
   overflow-y: auto;
@@ -483,6 +420,34 @@ body {
 }
 
 @media (max-width: 760px) {
+  .landing-frame {
+    padding: 0;
+  }
+
+  .landing-content {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-copy {
+    text-align: center;
+    padding: 72px 22px 32px;
+  }
+
+  .landing-actions {
+    justify-content: center;
+  }
+
+  .landing-content h1 {
+    font-size: 52px;
+  }
+
+  .hero-plant-visual {
+    min-height: 280px;
+    border-left: none;
+    border-top: 2px solid #234f36;
+    border-radius: 0 0 26px 26px;
+  }
+
   .app {
     flex-direction: column;
   }
@@ -537,6 +502,11 @@ body.dark-mode .landing-actions button:hover {
   color: #111914;
 }
 
+body.dark-mode .hero-plant-visual {
+  border-color: #d7eadc;
+  background: url("assets/plant-corner.jpeg") center 45% / cover;
+}
+
 body.dark-mode .feature-page {
   background: #111914;
   color: #edf7ef;
@@ -573,12 +543,6 @@ body.dark-mode .menu-button span {
   background: #d7eadc;
 }
 
-body.dark-mode .corner-vine,
-body.dark-mode .leaf,
-body.dark-mode .corner-flower span {
-  border-color: #d7eadc;
-}
-
 body.dark-mode .chat-section {
   background: #111914;
 }
@@ -606,3 +570,4 @@ body.dark-mode .chat-form input {
 body.dark-mode .chat-form input::placeholder {
   color: #91a397;
 }
+
