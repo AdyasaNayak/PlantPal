@@ -2,6 +2,8 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatMessages = document.getElementById("chatMessages");
 const themeToggle = document.getElementById("themeToggle");
+const navItems = document.querySelectorAll(".nav-item");
+const topicButtons = document.querySelectorAll(".topic-btn");
 
 const plantReplies = [
   "Most houseplants prefer watering only when the top inch of soil feels dry.",
@@ -45,6 +47,38 @@ themeToggle.addEventListener("click", function () {
   }
 });
 
+const promptMap = {
+  "Ask PlantPal": "How can you help me take care of my houseplants?",
+  "Diagnose a Problem":
+    "My plant looks unhealthy. Can you help me diagnose the problem?",
+  "Find your Houseplant": "Can you help me identify what houseplant I have?",
+  "Care Guide": "Can you give me a beginner-friendly houseplant care guide?",
+  "Watering Schedule":
+    "Can you help me create a watering schedule for my plant?",
+  "Pet Safety": "Can you tell me which common houseplants are safe for pets?",
+  "Yellow Leaves": "Why are my plant leaves turning yellow?",
+  "Brown Tips": "Why are the tips of my plant leaves turning brown?",
+  Overwatering: "How do I know if I am overwatering my plant?",
+  "Low Light plants": "What are the best low light houseplants for beginners?",
+};
+
+navItems.forEach(function (button) {
+  button.addEventListener("click", function () {
+    navItems.forEach(function (item) {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+  });
+});
+
+topicButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const prompt = promptMap[button.textContent.trim()];
+    sendPrompt(prompt);
+  });
+});
+
 function addMessage(text, sender) {
   const messageElement = document.createElement("div");
   messageElement.classList.add("message", sender);
@@ -69,4 +103,23 @@ function removeTypingMessage() {
   if (typingElement) {
     typingElement.remove();
   }
+}
+
+function sendPrompt(prompt) {
+  if (!prompt) {
+    return;
+  }
+
+  addMessage(prompt, "user");
+
+  showTypingMessage();
+
+  setTimeout(function () {
+    removeTypingMessage();
+
+    const randomReply =
+      plantReplies[Math.floor(Math.random() * plantReplies.length)];
+
+    addMessage(randomReply, "bot");
+  }, 900);
 }
