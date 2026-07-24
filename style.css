@@ -20,6 +20,7 @@ body {
   background: #234f36;
   color: white;
   padding: 32px 24px;
+  overflow-y: auto;
 }
 
 .sidebar h1 {
@@ -30,6 +31,71 @@ body {
 .sidebar p {
   color: #d7eadc;
   line-height: 1.5;
+}
+
+.brand {
+  margin-bottom: 32px;
+}
+
+.sidebar-nav,
+.quick-topics,
+.coming-soon {
+  margin-top: 28px;
+}
+
+.sidebar h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #d7eadc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav,
+.quick-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item,
+.topic-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 12px;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.nav-item {
+  background: transparent;
+  color: #f2fff5;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: #2f6b49;
+}
+
+.topic-btn {
+  background: #d7eadc;
+  color: #1f2a24;
+}
+
+.topic-btn:hover {
+  background: #c2dfca;
+}
+
+.coming-soon {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 20px;
+}
+
+.coming-soon p {
+  color: #b9d4c1;
+  margin-bottom: 8px;
 }
 
 .chat-section {
