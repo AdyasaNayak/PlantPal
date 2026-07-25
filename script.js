@@ -6,10 +6,16 @@ const startWateringButton = document.getElementById("startWateringButton");
 const sidebarHomeButton = document.getElementById("sidebarHomeButton");
 const sidebarAskButton = document.getElementById("sidebarAskButton");
 const sidebarDiagnoseButton = document.getElementById("sidebarDiagnoseButton");
-const sidebarFindPlantButton = document.getElementById("sidebarFindPlantButton");
-const sidebarCareGuideButton = document.getElementById("sidebarCareGuideButton");
+const sidebarFindPlantButton = document.getElementById(
+  "sidebarFindPlantButton",
+);
+const sidebarCareGuideButton = document.getElementById(
+  "sidebarCareGuideButton",
+);
 const sidebarWateringButton = document.getElementById("sidebarWateringButton");
-const sidebarPetSafetyButton = document.getElementById("sidebarPetSafetyButton");
+const sidebarPetSafetyButton = document.getElementById(
+  "sidebarPetSafetyButton",
+);
 const appLayout = document.querySelector(".app");
 const landingPage = document.querySelector(".landing-page");
 const featurePages = document.querySelectorAll(".feature-page");
@@ -31,13 +37,11 @@ const chatHistory = [];
 
 const savedTheme = localStorage.getItem("plantpal-theme");
 
-if(savedTheme === "dark") {
+if (savedTheme === "dark") {
   document.body.classList.add("dark-mode");
   themeIcon.textContent = "☼";
   themeToggle.setAttribute("aria-label", "Switch to light mode");
 }
-
-
 
 chatForm.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -58,22 +62,25 @@ chatForm.addEventListener("submit", async function (event) {
 
   showTypingMessage();
 
-  try{
-    const response =  await fetch("http://localhost:5000/api/chat", {
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      "https://plantpal-backend-dpjw.onrender.com/api/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: chatHistory,
+        }),
       },
-      body: JSON.stringify({
-        messages: chatHistory,
-      }),
-    });
+    );
 
     const data = await response.json();
 
     removeTypingMessage();
 
-    if(!response.ok){
+    if (!response.ok) {
       addMessage("Sorry, something went wrong. Please try again.", "bot");
       return;
     }
@@ -84,8 +91,7 @@ chatForm.addEventListener("submit", async function (event) {
       role: "assistant",
       content: data.reply,
     });
-  }
-  catch(error){
+  } catch (error) {
     removeTypingMessage();
     addMessage("I couldn't connect to the PlantPal server.", "bot");
   }
