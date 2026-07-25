@@ -27,6 +27,7 @@ const themeToggle = document.getElementById("themeToggle");
 const themeIcon = document.querySelector(".theme-icon");
 const navItems = document.querySelectorAll(".nav-item");
 const pageHomeButtons = document.querySelectorAll(".page-home-button");
+const chatHistory = [];
 
 const savedTheme = localStorage.getItem("plantpal-theme");
 
@@ -36,15 +37,9 @@ if(savedTheme === "dark") {
   themeToggle.setAttribute("aria-label", "Switch to light mode");
 }
 
-const plantReplies = [
-  "Most houseplants prefer watering only when the top inch of soil feels dry.",
-  "Yellow leaves can happen because of overwatering, poor drainage, low light, or normal aging.",
-  "For many indoor plants, bright indirect light is safer than harsh direct sunlight.",
-  "If you see pests, gently wipe the leaves and isolate the plant from your other plants.",
-  "A good care routine depends on the plant type, pot size, light, humidity, and season.",
-];
 
-chatForm.addEventListener("submit", function (event) {
+
+chatForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const message = userInput.value.trim();
@@ -56,16 +51,44 @@ chatForm.addEventListener("submit", function (event) {
   addMessage(message, "user");
   userInput.value = "";
 
+  chatHistory.push({
+    role: "user",
+    content: message,
+  });
+
   showTypingMessage();
 
-  setTimeout(function () {
+  try{
+    const response =  await fetch("http://localhost:5000/api/chat", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: chatHistory,
+      }),
+    });
+
+    const data = await response.json();
+
     removeTypingMessage();
 
-    const randomReply =
-      plantReplies[Math.floor(Math.random() * plantReplies.length)];
+    if(!response.ok){
+      addMessage("Sorry, something went wrong. Please try again.", "bot");
+      return;
+    }
 
-    addMessage(randomReply, "bot");
-  }, 900);
+    addMessage(data.reply, "bot");
+
+    chatHistory.push({
+      role: "assistant",
+      content: data.reply,
+    });
+  }
+  catch(error){
+    removeTypingMessage();
+    addMessage("I couldn't connect to the PlantPal server.", "bot");
+  }
 });
 
 homeButton.addEventListener("click", function () {
