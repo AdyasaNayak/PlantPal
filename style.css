@@ -196,6 +196,221 @@
   line-height: 1.6;
 }
 
+.plant-finder-page {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.finder-carousel-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 260px;
+  margin-bottom: 28px;
+  border: 2px solid #234f36;
+  border-radius: 28px;
+  background: #fffaf0;
+}
+
+.finder-carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 34%;
+  gap: 14px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 18px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.finder-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.finder-carousel::-webkit-scrollbar-thumb {
+  background: rgba(35, 79, 54, 0.35);
+  border-radius: 999px;
+}
+
+.finder-carousel img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+  scroll-snap-align: center;
+}
+
+.carousel-arrow {
+  position: absolute;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #234f36;
+  border-radius: 50%;
+  background: rgba(255, 250, 240, 0.86);
+  color: #234f36;
+  cursor: pointer;
+  font-size: 32px;
+  line-height: 1;
+}
+
+#finderPrevButton {
+  left: 14px;
+}
+
+#finderNextButton {
+  right: 14px;
+}
+
+.finder-content-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+.finder-intro-panel,
+.finder-upload-panel {
+  border: 2px solid #234f36;
+  border-radius: 28px;
+  background: #fffaf0;
+  padding: 36px;
+}
+
+.finder-intro-panel h1 {
+  color: #234f36;
+  font-size: 48px;
+  margin-bottom: 14px;
+}
+
+.finder-upload-panel h2 {
+  color: #234f36;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.finder-intro-panel p:last-child,
+.finder-upload-panel p:not(.eyebrow) {
+  color: #5f6f64;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.finder-upload-box {
+  display: flex;
+  min-height: 130px;
+  margin: 20px 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px dashed rgba(35, 79, 54, 0.35);
+  border-radius: 20px;
+  background: #fbf7e8;
+  color: #234f36;
+  cursor: pointer;
+  text-align: center;
+}
+
+.finder-upload-box span {
+  font-weight: 700;
+}
+
+.finder-upload-box small {
+  color: #5f6f64;
+}
+
+.finder-tips {
+  margin-top: 18px;
+  border: 1px solid rgba(35, 79, 54, 0.2);
+  border-radius: 18px;
+  background: #fbf7e8;
+  padding: 16px;
+}
+
+.finder-tips h3 {
+  color: #234f36;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.finder-tips ul {
+  color: #5f6f64;
+  line-height: 1.7;
+  padding-left: 18px;
+}
+
+#plantPhotoInput {
+  display: none;
+}
+
+.finder-preview {
+  display: flex;
+  min-height: 190px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 1px solid rgba(35, 79, 54, 0.2);
+  border-radius: 20px;
+  background: #fbf7e8;
+  color: #5f6f64;
+  text-align: center;
+}
+
+.finder-preview img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.finder-result {
+  margin-bottom: 18px;
+  border: 1px solid rgba(35, 79, 54, 0.2);
+  border-radius: 20px;
+  background: #fbf7e8;
+  padding: 18px;
+}
+
+.finder-result h3 {
+  color: #234f36;
+  margin-bottom: 8px;
+}
+
+.finder-result p:last-child {
+  color: #5f6f64;
+  line-height: 1.5;
+}
+
+.finder-result-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.finder-result-tags span {
+  border: 1px solid rgba(35, 79, 54, 0.24);
+  border-radius: 999px;
+  color: #234f36;
+  font-size: 13px;
+  padding: 7px 10px;
+}
+
+.finder-identify-button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  background: #234f36;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 18px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -459,6 +674,31 @@ body {
   .message {
     max-width: 90%;
   }
+
+  .feature-page {
+    padding: 110px 18px 36px;
+  }
+
+  .finder-carousel {
+    grid-auto-columns: 78%;
+  }
+
+  .finder-carousel img {
+    height: 210px;
+  }
+
+  .finder-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-intro-panel,
+  .finder-upload-panel {
+    padding: 28px 22px;
+  }
+
+  .finder-intro-panel h1 {
+    font-size: 38px;
+  }
 }
 
 body.dark-mode {
@@ -521,6 +761,55 @@ body.dark-mode .feature-panel h1 {
 
 body.dark-mode .feature-panel p:last-child {
   color: #a9b8ad;
+}
+
+body.dark-mode .finder-carousel-band,
+body.dark-mode .finder-intro-panel,
+body.dark-mode .finder-upload-panel {
+  background: #18231d;
+  border-color: #d7eadc;
+}
+
+body.dark-mode .finder-intro-panel h1,
+body.dark-mode .finder-upload-panel h2 {
+  color: #d7eadc;
+}
+
+body.dark-mode .finder-intro-panel p:last-child,
+body.dark-mode .finder-upload-panel p:not(.eyebrow),
+body.dark-mode .finder-upload-box small,
+body.dark-mode .finder-preview,
+body.dark-mode .finder-result p:last-child {
+  color: #a9b8ad;
+}
+
+body.dark-mode .finder-upload-box,
+body.dark-mode .finder-tips,
+body.dark-mode .finder-preview,
+body.dark-mode .finder-result,
+body.dark-mode .carousel-arrow {
+  background: #111914;
+  border-color: rgba(215, 234, 220, 0.32);
+  color: #d7eadc;
+}
+
+body.dark-mode .finder-result h3,
+body.dark-mode .finder-tips h3,
+body.dark-mode .finder-result-tags span {
+  color: #d7eadc;
+}
+
+body.dark-mode .finder-tips ul {
+  color: #a9b8ad;
+}
+
+body.dark-mode .finder-result-tags span {
+  border-color: rgba(215, 234, 220, 0.3);
+}
+
+body.dark-mode .finder-identify-button {
+  background: #d7eadc;
+  color: #111914;
 }
 
 body.dark-mode .menu-button,

@@ -33,6 +33,13 @@ const themeToggle = document.getElementById("themeToggle");
 const themeIcon = document.querySelector(".theme-icon");
 const navItems = document.querySelectorAll(".nav-item");
 const pageHomeButtons = document.querySelectorAll(".page-home-button");
+const finderCarousel = document.getElementById("finderCarousel");
+const finderPrevButton = document.getElementById("finderPrevButton");
+const finderNextButton = document.getElementById("finderNextButton");
+const plantPhotoInput = document.getElementById("plantPhotoInput");
+const plantPreview = document.getElementById("plantPreview");
+const plantResult = document.getElementById("plantResult");
+const identifyPlantButton = document.getElementById("identifyPlantButton");
 const chatHistory = [];
 
 const savedTheme = localStorage.getItem("plantpal-theme");
@@ -169,6 +176,71 @@ pageHomeButtons.forEach(function (button) {
     showLandingPage();
   });
 });
+
+if (finderCarousel && finderPrevButton && finderNextButton) {
+  finderPrevButton.addEventListener("click", function () {
+    finderCarousel.scrollBy({
+      left: -360,
+      behavior: "smooth",
+    });
+  });
+
+  finderNextButton.addEventListener("click", function () {
+    finderCarousel.scrollBy({
+      left: 360,
+      behavior: "smooth",
+    });
+  });
+}
+
+if (plantPhotoInput && plantPreview && plantResult) {
+  plantPhotoInput.addEventListener("change", function () {
+    const file = plantPhotoInput.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    plantPreview.innerHTML = "";
+
+    const previewImage = document.createElement("img");
+    previewImage.src = previewUrl;
+    previewImage.alt = "Selected plant preview";
+
+    plantPreview.appendChild(previewImage);
+
+    plantResult.innerHTML = `
+      <p class="eyebrow">Result</p>
+      <h3>Photo ready</h3>
+      <p>
+        Your image is ready. Click Identify Plant to prepare this flow for AI detection.
+      </p>
+    `;
+  });
+}
+
+if (identifyPlantButton && plantPhotoInput && plantResult) {
+  identifyPlantButton.addEventListener("click", function () {
+    if (!plantPhotoInput.files || plantPhotoInput.files.length === 0) {
+      plantResult.innerHTML = `
+        <p class="eyebrow">Result</p>
+        <h3>No photo selected</h3>
+        <p>Please choose a clear plant photo first.</p>
+      `;
+      return;
+    }
+
+    plantResult.innerHTML = `
+      <p class="eyebrow">Result</p>
+      <h3>Plant detection coming soon</h3>
+      <p>
+        Next, this button will send the uploaded image to the backend and return
+        likely plant names and beginner-friendly care guidance.
+      </p>
+    `;
+  });
+}
 
 navItems.forEach(function (button) {
   button.addEventListener("click", function () {

@@ -126,12 +126,76 @@
         <span class="home-icon" aria-hidden="true">⌂</span>
       </button>
 
-      <div class="feature-panel">
-        <p class="eyebrow">Plant Finder</p>
-        <h1>Find Your Houseplant</h1>
-        <p>
-          A plant search and identification helper will live here soon.
-        </p>
+      <div class="plant-finder-page">
+        <section class="finder-carousel-band" aria-label="Houseplant photo carousel">
+          <button class="carousel-arrow" id="finderPrevButton" type="button" aria-label="Previous plant photo">
+            ‹
+          </button>
+
+          <div class="finder-carousel" id="finderCarousel">
+            <img src="assets/finder-plant-1.jpg" alt="Person holding a potted houseplant" />
+            <img src="assets/finder-plant-2.jpg" alt="Snake plant being repotted" />
+            <img src="assets/finder-plant-3.jpg" alt="Houseplant in a red pot" />
+            <img src="assets/finder-plant-4.jpg" alt="Peace lily plant in gardening gloves" />
+            <img src="assets/finder-plant-5.jpg" alt="Close up of green houseplant leaves" />
+            <img src="assets/finder-plant-6.jpg" alt="Bright green patterned leaves" />
+          </div>
+
+          <button class="carousel-arrow" id="finderNextButton" type="button" aria-label="Next plant photo">
+            ›
+          </button>
+        </section>
+
+        <section class="finder-content-grid">
+          <div class="finder-intro-panel">
+            <p class="eyebrow">Plant Finder</p>
+            <h1>Find Your Houseplant</h1>
+            <p>
+              Explore common indoor plants, then upload your own plant photo.
+              The image detector will be connected next so PlantPal can suggest
+              likely plant names and care basics.
+            </p>
+          </div>
+
+          <div class="finder-upload-panel">
+            <p class="eyebrow">Photo Search</p>
+            <h2>Upload a plant picture</h2>
+            <p>
+              Choose a clear photo of the leaves, stem, or full plant.
+            </p>
+
+            <div class="finder-tips">
+              <h3>Tips for better detection</h3>
+              <ul>
+                <li>Use a clear photo in natural light.</li>
+                <li>Keep leaves visible and in focus.</li>
+                <li>Capture the full plant if possible.</li>
+              </ul>
+            </div>
+
+            <label class="finder-upload-box" for="plantPhotoInput">
+              <span>Choose plant photo</span>
+              <small>JPG, PNG, or WEBP</small>
+            </label>
+            <input id="plantPhotoInput" type="file" accept="image/*" />
+
+            <div class="finder-preview" id="plantPreview">
+              <p>No plant photo selected yet.</p>
+            </div>
+
+            <div class="finder-result" id="plantResult">
+              <p class="eyebrow">Result</p>
+              <h3>Waiting for a plant photo</h3>
+              <p>
+                Upload a plant image and PlantPal will prepare it for identification.
+              </p>
+            </div>
+
+            <button class="finder-identify-button" id="identifyPlantButton" type="button">
+              Identify Plant
+            </button>
+          </div>
+        </section>
       </div>
     </section>
 
