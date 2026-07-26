@@ -41,6 +41,7 @@ const plantPreview = document.getElementById("plantPreview");
 const plantResult = document.getElementById("plantResult");
 const identifyPlantButton = document.getElementById("identifyPlantButton");
 const chatHistory = [];
+const backendUrl = "https://plantpal-backend-dpjw.onrender.com";
 
 const savedTheme = localStorage.getItem("plantpal-theme");
 
@@ -70,9 +71,7 @@ chatForm.addEventListener("submit", async function (event) {
   showTypingMessage();
 
   try {
-    const response = await fetch(
-      "https://plantpal-backend-dpjw.onrender.com/api/chat",
-      {
+    const response = await fetch(`${backendUrl}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,8 +79,7 @@ chatForm.addEventListener("submit", async function (event) {
         body: JSON.stringify({
           messages: chatHistory,
         }),
-      },
-    );
+      });
 
     const data = await response.json();
 
@@ -221,7 +219,7 @@ if (plantPhotoInput && plantPreview && plantResult) {
 }
 
 if (identifyPlantButton && plantPhotoInput && plantResult) {
-  identifyPlantButton.addEventListener("click", function () {
+  identifyPlantButton.addEventListener("click", async function () {
     if (!plantPhotoInput.files || plantPhotoInput.files.length === 0) {
       plantResult.innerHTML = `
         <p class="eyebrow">Result</p>
@@ -231,14 +229,53 @@ if (identifyPlantButton && plantPhotoInput && plantResult) {
       return;
     }
 
+    identifyPlantButton.disabled = true;
+    identifyPlantButton.textContent = "Identifying...";
+
     plantResult.innerHTML = `
       <p class="eyebrow">Result</p>
-      <h3>Plant detection coming soon</h3>
-      <p>
-        Next, this button will send the uploaded image to the backend and return
-        likely plant names and beginner-friendly care guidance.
-      </p>
+      <h3>Analyzing plant photo...</h3>
+      <p>PlantPal is checking the leaf shape, color, and visible growth pattern.</p>
     `;
+
+    try {
+      const image = await readFileAsDataUrl(plantPhotoInput.files[0]);
+      const response = await fetch(`${backendUrl}/api/identify-plant`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: image,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        plantResult.innerHTML = `
+          <p class="eyebrow">Result</p>
+          <h3>Identification failed</h3>
+          <p>Please try again with a clearer plant photo.</p>
+        `;
+        return;
+      }
+
+      plantResult.innerHTML = `
+        <p class="eyebrow">Result</p>
+        <h3>PlantPal's best guess</h3>
+        <p>${escapeHtml(data.result)}</p>
+      `;
+    } catch (error) {
+      plantResult.innerHTML = `
+        <p class="eyebrow">Result</p>
+        <h3>Could not identify plant</h3>
+        <p>I couldn't connect to the PlantPal server. Please try again.</p>
+      `;
+    } finally {
+      identifyPlantButton.disabled = false;
+      identifyPlantButton.textContent = "Identify Plant";
+    }
   });
 }
 
@@ -325,4 +362,29 @@ function setActiveNav(activeButton) {
   });
 
   activeButton.classList.add("active");
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise(function (resolve, reject) {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+
+    reader.onerror = function () {
+      reject(reader.error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+function escapeHtml(text) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }

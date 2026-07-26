@@ -12,7 +12,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 
 app.get("/", function (req, res) {
@@ -48,6 +48,54 @@ app.post("/api/chat", async function (req, res) {
 
     res.status(500).json({
       error: "Something went wrong while generating a response.",
+    });
+  }
+});
+
+app.post("/api/identify-plant", async function (req, res) {
+  try {
+    const image = req.body.image;
+
+    if (!image) {
+      return res.status(400).json({
+        error: "Plant image is required",
+      });
+    }
+
+    const response = await client.responses.create({
+      model: "gpt-4.1-mini",
+      input: [
+        {
+          role: "system",
+          content:
+            "You are PlantPal, a careful houseplant identification assistant. Identify the most likely indoor plant from the image. If unsure, say so clearly. Give concise beginner-friendly care guidance.",
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text:
+                "Identify this houseplant. Return the likely plant name, confidence level, visible clues, light needs, watering advice, and one care tip. Keep it short and useful.",
+            },
+            {
+              type: "input_image",
+              image_url: image,
+              detail: "low",
+            },
+          ],
+        },
+      ],
+    });
+
+    res.json({
+      result: response.output_text,
+    });
+  } catch (error) {
+    console.error("OpenAI vision error:", error);
+
+    res.status(500).json({
+      error: "Something went wrong while identifying the plant.",
     });
   }
 });
