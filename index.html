@@ -3,41 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PlantPal - AI Plant Care Companion</title>
+    <meta
+      name="description"
+      content="PlantPal — practical, beginner-friendly help for watering, light, and common houseplant problems."
+    />
+    <meta name="theme-color" content="#234f36" />
+    <title>PlantPal · Houseplant care made simple</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪴</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <button
-      class="menu-button global-menu-button"
-      id="menuButton"
-      type="button"
-      aria-label="Open menu"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <header class="top-bar">
+      <button
+        class="icon-button menu-button"
+        id="menuButton"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="sidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <button
-      id="themeToggle"
-      class="global-theme-toggle"
-      type="button"
-      aria-label="Switch to dark mode"
-    >
-      <span class="theme-icon" aria-hidden="true">◐</span>
-    </button>
+      <button class="brand" id="brandHome" type="button" data-route="home">PlantPal</button>
 
-    <aside class="sidebar drawer-sidebar" id="sidebar">
+      <div class="top-bar-actions">
+        <button
+          class="icon-button page-home-button hidden"
+          id="homeButton"
+          type="button"
+          aria-label="Back to home"
+          data-route="home"
+        >
+          <span class="home-icon" aria-hidden="true">⌂</span>
+        </button>
+        <button
+          class="icon-button theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Switch to dark mode"
+        >
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
       <nav class="sidebar-nav">
         <h3>Explore</h3>
 
-        <button type="button" class="nav-item active" id="sidebarHomeButton">Home</button>
-        <button type="button" class="nav-item" id="sidebarAskButton">Ask PlantPal</button>
-        <button type="button" class="nav-item" id="sidebarDiagnoseButton">Diagnose a Problem</button>
-        <button type="button" class="nav-item" id="sidebarFindPlantButton">Find your Houseplant</button>
-        <button type="button" class="nav-item" id="sidebarCareGuideButton">Care Guide</button>
-        <button type="button" class="nav-item" id="sidebarWateringButton">Watering Schedule</button>
-        <button type="button" class="nav-item" id="sidebarPetSafetyButton">Pet Safety</button>
+        <button type="button" class="nav-item active" data-route="home">
+          Home
+        </button>
+        <button type="button" class="nav-item" data-route="ask">
+          Ask PlantPal
+        </button>
+        <button type="button" class="nav-item" data-route="diagnose">
+          Diagnose a Problem
+        </button>
+        <button type="button" class="nav-item" data-route="find">
+          Find your Houseplant
+        </button>
+        <button type="button" class="nav-item" data-route="care">
+          Care Guide
+        </button>
+        <button type="button" class="nav-item" data-route="watering">
+          Watering Schedule
+        </button>
+        <button type="button" class="nav-item" data-route="pet-safety">
+          Pet Safety
+        </button>
       </nav>
 
       <div class="coming-soon">
@@ -48,28 +96,29 @@
     </aside>
 
     <section class="landing-page">
-      <header class="landing-header">
-        <span></span>
-        <p class="landing-logo">PlantPal</p>
-      </header>
-
       <div class="landing-frame">
         <div class="landing-content">
-          <div class="landing-copy">
-            <p class="eyebrow">Plant Care Corner</p>
+          <p class="eyebrow">Plant Care Corner</p>
 
-            <h1>PlantPal</h1>
+          <h1>PlantPal</h1>
 
-            <p class="landing-subtitle">
-              Your guide to happier, healthier houseplants.
-            </p>
+          <p class="landing-subtitle">
+            Your guide to happier, healthier houseplants.
+          </p>
 
-            <div class="landing-actions">
-              <button type="button" id = "startChatButton">Ask PlantPal</button>
-              <button type="button" id="startDiagnoseButton">Diagnose</button>
-              <button type="button" id="startCareGuideButton">Care Guide</button>
-              <button type="button" id="startWateringButton">Watering Plan</button>
-            </div>
+          <div class="landing-actions">
+            <button type="button" class="button-primary" data-route="ask">
+              Ask PlantPal
+            </button>
+            <button type="button" class="button-secondary" data-route="diagnose">
+              Diagnose
+            </button>
+            <button type="button" class="button-secondary" data-route="care">
+              Care Guide
+            </button>
+            <button type="button" class="button-secondary" data-route="watering">
+              Watering Plan
+            </button>
           </div>
         </div>
       </div>
@@ -82,14 +131,14 @@
             <h2>Ask PlantPal</h2>
             <p>Get help with watering, sunlight, pests, and plant problems.</p>
           </div>
-          <div class="chat-header-actions">
-            <button id="homeButton" type="button" aria-label="Go home">
-              <span class="home-icon" aria-hidden="true">⌂</span>
-            </button>
-          </div>
         </header>
 
-        <section id="chatMessages" class="chat-messages">
+        <section
+          id="chatMessages"
+          class="chat-messages"
+          aria-live="polite"
+          aria-label="Conversation with PlantPal"
+        >
           <div class="message bot">
             Hi! I'm PlantPal. Ask me anything about your house plants.
           </div>
@@ -101,6 +150,7 @@
             id="userInput"
             placeholder="Ask about your plant..."
             autocomplete="off"
+            aria-label="Your plant question"
           />
           <button type="submit">Send</button>
         </form>
@@ -108,24 +158,21 @@
     </div>
 
     <section class="feature-page hidden" id="diagnosePage">
-      <button class="page-home-button" type="button" aria-label="Go home">
-        <span class="home-icon" aria-hidden="true">⌂</span>
-      </button>
-
       <div class="feature-panel">
         <p class="eyebrow">Plant Health</p>
         <h1>Diagnose a Problem</h1>
         <p>
-          A guided plant problem checker will live here soon.
+          A guided plant problem checker will live here soon. In the meantime,
+          Ask PlantPal can help with yellowing leaves, drooping stems, pests,
+          and more.
         </p>
+        <button type="button" class="button-primary" data-route="ask">
+          Ask PlantPal
+        </button>
       </div>
     </section>
 
     <section class="feature-page hidden" id="findPlantPage">
-      <button class="page-home-button" type="button" aria-label="Go home">
-        <span class="home-icon" aria-hidden="true">⌂</span>
-      </button>
-
       <div class="plant-finder-page">
         <section class="finder-carousel-band" aria-label="Houseplant photo carousel">
           <button class="carousel-arrow" id="finderPrevButton" type="button" aria-label="Previous plant photo">
@@ -151,9 +198,9 @@
             <p class="eyebrow">Plant Finder</p>
             <h1>Find Your Houseplant</h1>
             <p>
-              Explore common indoor plants, then upload your own plant photo.
-              The image detector will be connected next so PlantPal can suggest
-              likely plant names and care basics.
+              Browse common indoor plants below, then upload a photo of your
+              own and PlantPal will suggest the likely plant along with a few
+              care basics to get you started.
             </p>
           </div>
 
@@ -187,7 +234,7 @@
               <p class="eyebrow">Result</p>
               <h3>Waiting for a plant photo</h3>
               <p>
-                Upload a plant image and PlantPal will prepare it for identification.
+                Upload a plant image and PlantPal will identify it for you.
               </p>
             </div>
 
@@ -200,44 +247,46 @@
     </section>
 
     <section class="feature-page hidden" id="careGuidePage">
-      <button class="page-home-button" type="button" aria-label="Go home">
-        <span class="home-icon" aria-hidden="true">⌂</span>
-      </button>
-
       <div class="feature-panel">
         <p class="eyebrow">Care Basics</p>
         <h1>Care Guide</h1>
         <p>
-          Beginner-friendly care guides will live here soon.
+          Beginner-friendly care guides for popular houseplants are on the
+          way. Until then, Ask PlantPal can walk you through light, watering,
+          soil, and feeding for almost any plant.
         </p>
+        <button type="button" class="button-primary" data-route="ask">
+          Ask PlantPal
+        </button>
       </div>
     </section>
 
     <section class="feature-page hidden" id="wateringPage">
-      <button class="page-home-button" type="button" aria-label="Go home">
-        <span class="home-icon" aria-hidden="true">⌂</span>
-      </button>
-
       <div class="feature-panel">
         <p class="eyebrow">Care Routine</p>
         <h1>Watering Schedule</h1>
         <p>
-          Personalized watering plans will live here soon.
+          Personalized watering plans are coming soon. For now, Ask PlantPal
+          can suggest a watering rhythm for any plant in your home.
         </p>
+        <button type="button" class="button-primary" data-route="ask">
+          Ask PlantPal
+        </button>
       </div>
     </section>
 
     <section class="feature-page hidden" id="petSafetyPage">
-      <button class="page-home-button" type="button" aria-label="Go home">
-        <span class="home-icon" aria-hidden="true">⌂</span>
-      </button>
-
       <div class="feature-panel">
         <p class="eyebrow">Home Safety</p>
         <h1>Pet Safety</h1>
         <p>
-          Pet-safe plant guidance will live here soon.
+          A browsable list of pet-safe (and pet-toxic) houseplants is coming
+          soon. In the meantime, just ask PlantPal whether a plant is safe
+          around cats or dogs.
         </p>
+        <button type="button" class="button-primary" data-route="ask">
+          Ask PlantPal
+        </button>
       </div>
     </section>
 

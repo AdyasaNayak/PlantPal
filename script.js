@@ -1,38 +1,34 @@
-const homeButton = document.getElementById("homeButton");
-const startChatButton = document.getElementById("startChatButton");
-const startDiagnoseButton = document.getElementById("startDiagnoseButton");
-const startCareGuideButton = document.getElementById("startCareGuideButton");
-const startWateringButton = document.getElementById("startWateringButton");
-const sidebarHomeButton = document.getElementById("sidebarHomeButton");
-const sidebarAskButton = document.getElementById("sidebarAskButton");
-const sidebarDiagnoseButton = document.getElementById("sidebarDiagnoseButton");
-const sidebarFindPlantButton = document.getElementById(
-  "sidebarFindPlantButton",
-);
-const sidebarCareGuideButton = document.getElementById(
-  "sidebarCareGuideButton",
-);
-const sidebarWateringButton = document.getElementById("sidebarWateringButton");
-const sidebarPetSafetyButton = document.getElementById(
-  "sidebarPetSafetyButton",
-);
-const appLayout = document.querySelector(".app");
-const landingPage = document.querySelector(".landing-page");
-const featurePages = document.querySelectorAll(".feature-page");
-const diagnosePage = document.getElementById("diagnosePage");
-const findPlantPage = document.getElementById("findPlantPage");
-const careGuidePage = document.getElementById("careGuidePage");
-const wateringPage = document.getElementById("wateringPage");
-const petSafetyPage = document.getElementById("petSafetyPage");
+const backendUrl = "https://plantpal-backend-dpjw.onrender.com";
+
+// Only the most recent turns are sent to the server to keep requests small.
+const MAX_CHAT_HISTORY = 12;
+
 const menuButton = document.getElementById("menuButton");
 const sidebar = document.getElementById("sidebar");
-const chatForm = document.getElementById("chatForm");
-const userInput = document.getElementById("userInput");
-const chatMessages = document.getElementById("chatMessages");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
 const themeToggle = document.getElementById("themeToggle");
 const themeIcon = document.querySelector(".theme-icon");
-const navItems = document.querySelectorAll(".nav-item");
-const pageHomeButtons = document.querySelectorAll(".page-home-button");
+const homeButton = document.getElementById("homeButton");
+
+const landingPage = document.querySelector(".landing-page");
+const appLayout = document.querySelector(".app");
+const pages = {
+  home: landingPage,
+  ask: appLayout,
+  diagnose: document.getElementById("diagnosePage"),
+  find: document.getElementById("findPlantPage"),
+  care: document.getElementById("careGuidePage"),
+  watering: document.getElementById("wateringPage"),
+  "pet-safety": document.getElementById("petSafetyPage"),
+};
+
+const navItems = document.querySelectorAll(".nav-item[data-route]");
+
+const chatForm = document.getElementById("chatForm");
+const chatMessages = document.getElementById("chatMessages");
+const userInput = document.getElementById("userInput");
+const chatHistory = [];
+
 const finderCarousel = document.getElementById("finderCarousel");
 const finderPrevButton = document.getElementById("finderPrevButton");
 const finderNextButton = document.getElementById("finderNextButton");
@@ -40,16 +36,93 @@ const plantPhotoInput = document.getElementById("plantPhotoInput");
 const plantPreview = document.getElementById("plantPreview");
 const plantResult = document.getElementById("plantResult");
 const identifyPlantButton = document.getElementById("identifyPlantButton");
-const chatHistory = [];
-const backendUrl = "https://plantpal-backend-dpjw.onrender.com";
 
-const savedTheme = localStorage.getItem("plantpal-theme");
+/* Theme ---------------------------------------- */
 
-if (savedTheme === "dark") {
-  document.body.classList.add("dark-mode");
-  themeIcon.textContent = "☼";
-  themeToggle.setAttribute("aria-label", "Switch to light mode");
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+
+  document.body.classList.toggle("dark-mode", isDark);
+  themeIcon.textContent = isDark ? "☼" : "◐";
+  themeToggle.setAttribute(
+    "aria-label",
+    isDark ? "Switch to light mode" : "Switch to dark mode",
+  );
+  localStorage.setItem("plantpal-theme", theme);
 }
+
+applyTheme(localStorage.getItem("plantpal-theme") === "dark" ? "dark" : "light");
+
+themeToggle.addEventListener("click", function () {
+  const isDark = document.body.classList.contains("dark-mode");
+  applyTheme(isDark ? "light" : "dark");
+});
+
+/* Routing -------------------------------------- */
+
+function showRoute(route) {
+  const page = pages[route];
+
+  if (!page) {
+    return;
+  }
+
+  Object.values(pages).forEach(function (pageElement) {
+    pageElement.classList.add("hidden");
+  });
+
+  page.classList.remove("hidden");
+  homeButton.classList.toggle("hidden", route === "home");
+
+  navItems.forEach(function (item) {
+    item.classList.toggle("active", item.dataset.route === route);
+  });
+
+  closeSidebar();
+}
+
+// Every "go to page" button in the app just carries a data-route attribute.
+document.addEventListener("click", function (event) {
+  const routeButton = event.target.closest("[data-route]");
+
+  if (routeButton) {
+    showRoute(routeButton.dataset.route);
+  }
+});
+
+/* Sidebar drawer -------------------------------- */
+
+function openSidebar() {
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("visible");
+  menuButton.classList.add("open");
+  menuButton.setAttribute("aria-expanded", "true");
+}
+
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("visible");
+  menuButton.classList.remove("open");
+  menuButton.setAttribute("aria-expanded", "false");
+}
+
+menuButton.addEventListener("click", function () {
+  if (sidebar.classList.contains("open")) {
+    closeSidebar();
+  } else {
+    openSidebar();
+  }
+});
+
+sidebarOverlay.addEventListener("click", closeSidebar);
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeSidebar();
+  }
+});
+
+/* Chat ------------------------------------------ */
 
 chatForm.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -62,6 +135,7 @@ chatForm.addEventListener("submit", async function (event) {
 
   addMessage(message, "user");
   userInput.value = "";
+  chatForm.querySelector("button").disabled = true;
 
   chatHistory.push({
     role: "user",
@@ -72,14 +146,14 @@ chatForm.addEventListener("submit", async function (event) {
 
   try {
     const response = await fetch(`${backendUrl}/api/chat`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: chatHistory,
-        }),
-      });
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: chatHistory.slice(-MAX_CHAT_HISTORY),
+      }),
+    });
 
     const data = await response.json();
 
@@ -90,104 +164,56 @@ chatForm.addEventListener("submit", async function (event) {
       return;
     }
 
-    addMessage(data.reply, "bot");
-
+    const reply = data.reply || "Sorry, I got an empty response. Please try again.";
+    addMessage(reply, "bot");
     chatHistory.push({
       role: "assistant",
-      content: data.reply,
+      content: reply,
     });
   } catch (error) {
     removeTypingMessage();
     addMessage("I couldn't connect to the PlantPal server.", "bot");
+  } finally {
+    chatForm.querySelector("button").disabled = false;
+    userInput.focus();
   }
 });
 
-homeButton.addEventListener("click", function () {
-  showLandingPage();
-});
+function addMessage(text, sender) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message", sender);
+  messageElement.textContent = text;
 
-themeToggle.addEventListener("click", function () {
-  document.body.classList.toggle("dark-mode");
+  chatMessages.appendChild(messageElement);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
-  if (document.body.classList.contains("dark-mode")) {
-    themeIcon.textContent = "☼";
-    themeToggle.setAttribute("aria-label", "Switch to light mode");
-    localStorage.setItem("plantpal-theme", "dark");
-  } else {
-    themeIcon.textContent = "◐";
-    themeToggle.setAttribute("aria-label", "Switch to dark mode");
-    localStorage.setItem("plantpal-theme", "light");
+function showTypingMessage() {
+  const typingElement = document.createElement("div");
+  typingElement.classList.add("message", "bot", "typing");
+  typingElement.textContent = "PlantPal is thinking";
+
+  chatMessages.appendChild(typingElement);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTypingMessage() {
+  const typingElement = chatMessages.querySelector(".typing");
+
+  if (typingElement) {
+    typingElement.remove();
   }
-});
+}
 
-menuButton.addEventListener("click", function () {
-  sidebar.classList.toggle("open");
-  menuButton.classList.toggle("open");
-});
-
-startChatButton.addEventListener("click", function () {
-  showChatPage();
-});
-
-startDiagnoseButton.addEventListener("click", function () {
-  showFeaturePage(diagnosePage, sidebarDiagnoseButton);
-});
-
-startCareGuideButton.addEventListener("click", function () {
-  showFeaturePage(careGuidePage, sidebarCareGuideButton);
-});
-
-startWateringButton.addEventListener("click", function () {
-  showFeaturePage(wateringPage, sidebarWateringButton);
-});
-
-sidebarHomeButton.addEventListener("click", function () {
-  showLandingPage();
-});
-
-sidebarAskButton.addEventListener("click", function () {
-  showChatPage();
-});
-
-sidebarDiagnoseButton.addEventListener("click", function () {
-  showFeaturePage(diagnosePage, sidebarDiagnoseButton);
-});
-
-sidebarFindPlantButton.addEventListener("click", function () {
-  showFeaturePage(findPlantPage, sidebarFindPlantButton);
-});
-
-sidebarCareGuideButton.addEventListener("click", function () {
-  showFeaturePage(careGuidePage, sidebarCareGuideButton);
-});
-
-sidebarWateringButton.addEventListener("click", function () {
-  showFeaturePage(wateringPage, sidebarWateringButton);
-});
-
-sidebarPetSafetyButton.addEventListener("click", function () {
-  showFeaturePage(petSafetyPage, sidebarPetSafetyButton);
-});
-
-pageHomeButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    showLandingPage();
-  });
-});
+/* Plant finder ---------------------------------- */
 
 if (finderCarousel && finderPrevButton && finderNextButton) {
   finderPrevButton.addEventListener("click", function () {
-    finderCarousel.scrollBy({
-      left: -360,
-      behavior: "smooth",
-    });
+    finderCarousel.scrollBy({ left: -360, behavior: "smooth" });
   });
 
   finderNextButton.addEventListener("click", function () {
-    finderCarousel.scrollBy({
-      left: 360,
-      behavior: "smooth",
-    });
+    finderCarousel.scrollBy({ left: 360, behavior: "smooth" });
   });
 }
 
@@ -208,35 +234,24 @@ if (plantPhotoInput && plantPreview && plantResult) {
 
     plantPreview.appendChild(previewImage);
 
-    plantResult.innerHTML = `
-      <p class="eyebrow">Result</p>
-      <h3>Photo ready</h3>
-      <p>
-        Your image is ready. Click Identify Plant to prepare this flow for AI detection.
-      </p>
-    `;
+    renderPlantResult("Photo ready", "Your image is ready. Click Identify Plant to identify it.");
   });
 }
 
 if (identifyPlantButton && plantPhotoInput && plantResult) {
   identifyPlantButton.addEventListener("click", async function () {
     if (!plantPhotoInput.files || plantPhotoInput.files.length === 0) {
-      plantResult.innerHTML = `
-        <p class="eyebrow">Result</p>
-        <h3>No photo selected</h3>
-        <p>Please choose a clear plant photo first.</p>
-      `;
+      renderPlantResult("No photo selected", "Please choose a clear plant photo first.");
       return;
     }
 
     identifyPlantButton.disabled = true;
     identifyPlantButton.textContent = "Identifying...";
 
-    plantResult.innerHTML = `
-      <p class="eyebrow">Result</p>
-      <h3>Analyzing plant photo...</h3>
-      <p>PlantPal is checking the leaf shape, color, and visible growth pattern.</p>
-    `;
+    renderPlantResult(
+      "Analyzing plant photo...",
+      "PlantPal is checking the leaf shape, color, and visible growth pattern.",
+    );
 
     try {
       const image = await readFileAsDataUrl(plantPhotoInput.files[0]);
@@ -253,25 +268,13 @@ if (identifyPlantButton && plantPhotoInput && plantResult) {
       const data = await response.json();
 
       if (!response.ok) {
-        plantResult.innerHTML = `
-          <p class="eyebrow">Result</p>
-          <h3>Identification failed</h3>
-          <p>Please try again with a clearer plant photo.</p>
-        `;
+        renderPlantResult("Identification failed", "Please try again with a clearer plant photo.");
         return;
       }
 
-      plantResult.innerHTML = `
-        <p class="eyebrow">Result</p>
-        <h3>PlantPal's best guess</h3>
-        <p>${escapeHtml(data.result)}</p>
-      `;
+      renderPlantResult("PlantPal's best guess", data.result || "No identification came back. Please try again.");
     } catch (error) {
-      plantResult.innerHTML = `
-        <p class="eyebrow">Result</p>
-        <h3>Could not identify plant</h3>
-        <p>I couldn't connect to the PlantPal server. Please try again.</p>
-      `;
+      renderPlantResult("Could not identify plant", "I couldn't connect to the PlantPal server. Please try again.");
     } finally {
       identifyPlantButton.disabled = false;
       identifyPlantButton.textContent = "Identify Plant";
@@ -279,89 +282,12 @@ if (identifyPlantButton && plantPhotoInput && plantResult) {
   });
 }
 
-navItems.forEach(function (button) {
-  button.addEventListener("click", function () {
-    if (button.id) {
-      return;
-    }
-
-    navItems.forEach(function (item) {
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-  });
-});
-
-function addMessage(text, sender) {
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("message", sender);
-  messageElement.textContent = text;
-
-  chatMessages.appendChild(messageElement);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function showTypingMessage() {
-  const typingElement = document.createElement("div");
-  typingElement.classList.add("message", "bot", "typing");
-  typingElement.textContent = "PlantPal is thinking...";
-
-  chatMessages.appendChild(typingElement);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function removeTypingMessage() {
-  const typingElement = document.querySelector(".typing");
-
-  if (typingElement) {
-    typingElement.remove();
-  }
-}
-
-function showLandingPage() {
-  appLayout.classList.add("hidden");
-  landingPage.classList.remove("hidden");
-  hideFeaturePages();
-  sidebar.classList.remove("open");
-  menuButton.classList.remove("open");
-
-  setActiveNav(sidebarHomeButton);
-}
-
-function showChatPage() {
-  landingPage.classList.add("hidden");
-  appLayout.classList.remove("hidden");
-  hideFeaturePages();
-  sidebar.classList.remove("open");
-  menuButton.classList.remove("open");
-
-  setActiveNav(sidebarAskButton);
-}
-
-function showFeaturePage(page, activeButton) {
-  landingPage.classList.add("hidden");
-  appLayout.classList.add("hidden");
-  hideFeaturePages();
-  page.classList.remove("hidden");
-  sidebar.classList.remove("open");
-  menuButton.classList.remove("open");
-
-  setActiveNav(activeButton);
-}
-
-function hideFeaturePages() {
-  featurePages.forEach(function (page) {
-    page.classList.add("hidden");
-  });
-}
-
-function setActiveNav(activeButton) {
-  navItems.forEach(function (item) {
-    item.classList.remove("active");
-  });
-
-  activeButton.classList.add("active");
+function renderPlantResult(heading, body) {
+  plantResult.innerHTML = `
+    <p class="eyebrow">Result</p>
+    <h3>${escapeHtml(heading)}</h3>
+    <p>${escapeHtml(body)}</p>
+  `;
 }
 
 function readFileAsDataUrl(file) {
@@ -381,7 +307,7 @@ function readFileAsDataUrl(file) {
 }
 
 function escapeHtml(text) {
-  return text
+  return String(text)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
