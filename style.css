@@ -134,6 +134,7 @@
 
 .landing-content h1 {
   font-size: 72px;
+  font-weight: 600;
   color: #234f36;
   margin-bottom: 12px;
 }
@@ -156,15 +157,32 @@
   border: 1px solid #234f36;
   background: transparent;
   color: #234f36;
-  padding: 12px 18px;
+  padding: 12px 20px;
   border-radius: 999px;
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .landing-actions button:hover {
   background: #234f36;
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(35, 79, 54, 0.25);
+}
+
+.landing-actions button.primary {
+  background: #234f36;
+  color: white;
+}
+
+.landing-actions button.primary:hover {
+  background: #1b3d2a;
 }
 
 .feature-page {
@@ -182,6 +200,7 @@
   background: #fffaf0;
   padding: 64px 48px;
   text-align: center;
+  box-shadow: 0 12px 32px rgba(28, 63, 42, 0.1);
 }
 
 .feature-panel h1 {
@@ -424,9 +443,30 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
   background: #f4f0df;
   color: #1f2a24;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #234f36;
+  outline-offset: 2px;
+}
+
+body.dark-mode :focus-visible {
+  outline-color: #d7eadc;
 }
 
 .app {
@@ -502,6 +542,7 @@ body {
 .nav-item {
   background: transparent;
   color: #f2fff5;
+  transition: background 0.2s ease;
 }
 
 .nav-item:hover,
@@ -614,12 +655,52 @@ body {
 .message.bot {
   background: #e3f2e7;
   color: #1f2a24;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.message.bot::before {
+  content: "🌿";
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #234f36;
+  font-size: 14px;
 }
 
 .message.user {
   background: #234f36;
   color: white;
   margin-left: auto;
+}
+
+.message.typing span::after {
+  content: "";
+  display: inline-block;
+  animation: typing-dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes typing-dots {
+  0% {
+    content: "";
+  }
+
+  25% {
+    content: ".";
+  }
+
+  50% {
+    content: "..";
+  }
+
+  75% {
+    content: "...";
+  }
 }
 
 .chat-form {
@@ -634,6 +715,13 @@ body {
   border-radius: 10px;
   padding: 14px;
   font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.chat-form input:focus {
+  border-color: #234f36;
+  outline: 2px solid rgba(35, 79, 54, 0.25);
+  outline-offset: 0;
 }
 
 .chat-form button {
@@ -643,7 +731,16 @@ body {
   border-radius: 10px;
   padding: 0 22px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.chat-form button:hover {
+  background: #1b3d2a;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 760px) {
@@ -749,6 +846,15 @@ body.dark-mode .landing-actions button {
 body.dark-mode .landing-actions button:hover {
   background: #d7eadc;
   color: #111914;
+}
+
+body.dark-mode .landing-actions button.primary {
+  background: #d7eadc;
+  color: #111914;
+}
+
+body.dark-mode .landing-actions button.primary:hover {
+  background: #edf7ef;
 }
 
 body.dark-mode .feature-page {
@@ -862,5 +968,11 @@ body.dark-mode .chat-form input {
 
 body.dark-mode .chat-form input::placeholder {
   color: #91a397;
+}
+
+body.dark-mode .chat-form input:focus {
+  border-color: #d7eadc;
+  outline: 2px solid rgba(215, 234, 220, 0.4);
+  outline-offset: 0;
 }
 

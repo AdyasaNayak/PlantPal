@@ -305,7 +305,7 @@ function addMessage(text, sender) {
 function showTypingMessage() {
   const typingElement = document.createElement("div");
   typingElement.classList.add("message", "bot", "typing");
-  typingElement.textContent = "PlantPal is thinking...";
+  typingElement.innerHTML = "<span>PlantPal is thinking</span>";
 
   chatMessages.appendChild(typingElement);
   chatMessages.scrollTop = chatMessages.scrollHeight;
