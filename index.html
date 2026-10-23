@@ -56,6 +56,17 @@
         >
           <span class="theme-icon" aria-hidden="true">◐</span>
         </button>
+        <button
+          class="auth-button hidden"
+          id="signOutButton"
+          type="button"
+        >
+          Sign out
+        </button>
+        <span class="user-chip hidden" id="userChip"></span>
+        <button class="auth-button" id="signInButton" type="button">
+          Sign in
+        </button>
       </div>
     </header>
 
@@ -65,11 +76,14 @@
       <nav class="sidebar-nav">
         <h3>Explore</h3>
 
-        <button type="button" class="nav-item active" data-route="home">
+        <button type="button" class="nav-item" data-route="home">
           Home
         </button>
         <button type="button" class="nav-item" data-route="ask">
           Ask PlantPal
+        </button>
+        <button type="button" class="nav-item" data-route="my-plants">
+          My Plants
         </button>
         <button type="button" class="nav-item" data-route="diagnose">
           Diagnose a Problem
@@ -87,12 +101,6 @@
           Pet Safety
         </button>
       </nav>
-
-      <div class="coming-soon">
-        <h3>Coming Soon</h3>
-        <p>My Plants</p>
-        <p>Care Reminders</p>
-      </div>
     </aside>
 
     <section class="landing-page">
@@ -131,6 +139,26 @@
             <h2>Ask PlantPal</h2>
             <p>Get help with watering, sunlight, pests, and plant problems.</p>
           </div>
+          <div class="conversation-bar hidden" id="conversationBar">
+            <label class="visually-hidden" for="conversationSelect">Saved conversations</label>
+            <select id="conversationSelect" aria-label="Saved conversations"></select>
+            <button type="button" class="button-secondary conversation-new" id="newConversationButton">
+              New chat
+            </button>
+            <button
+              type="button"
+              class="icon-button conversation-delete"
+              id="deleteConversationButton"
+              aria-label="Delete this conversation"
+              title="Delete this conversation"
+            >
+              🗑
+            </button>
+          </div>
+          <p class="chat-save-hint hidden" id="chatSaveHint">
+            <button type="button" class="link-button" data-auth-open>Sign in</button>
+            to save your conversations to your account.
+          </p>
         </header>
 
         <section
@@ -238,6 +266,26 @@
               </p>
             </div>
 
+            <form class="save-plant-form hidden" id="savePlantForm">
+              <p class="eyebrow">Add to My Plants</p>
+              <label>Name it
+                <input id="savePlantNameInput" type="text" required maxlength="80" placeholder="e.g. Office fern" />
+              </label>
+              <label>Water every
+                <select id="savePlantIntervalInput">
+                  <option value="3">3 days</option>
+                  <option value="5">5 days</option>
+                  <option value="7" selected>7 days</option>
+                  <option value="10">10 days</option>
+                  <option value="14">14 days</option>
+                  <option value="21">21 days</option>
+                  <option value="30">30 days</option>
+                </select>
+              </label>
+              <p class="form-error hidden" id="savePlantError"></p>
+              <button type="submit" class="finder-identify-button" id="savePlantSubmit">Save to my plants</button>
+            </form>
+
             <button class="finder-identify-button" id="identifyPlantButton" type="button">
               Identify Plant
             </button>
@@ -289,6 +337,117 @@
         </button>
       </div>
     </section>
+
+    <section class="feature-page hidden" id="myPlantsPage">
+      <div class="plants-page">
+        <div class="plants-heading">
+          <div>
+            <p class="eyebrow">Your Garden</p>
+            <h1>My Plants</h1>
+            <p class="plants-subtitle">
+              Keep track of every plant you're growing, with care advice and
+              watering tasks in one place.
+            </p>
+          </div>
+          <button type="button" class="button-primary hidden" id="addPlantButton">
+            + Add a plant
+          </button>
+        </div>
+
+        <div class="feature-panel" id="plantsSignedOut">
+          <h2>Sign in to grow your collection</h2>
+          <p>
+            Your plants, care log, and saved conversations live in your
+            PlantPal account. Create one in seconds — it's free.
+          </p>
+          <button type="button" class="button-primary" data-auth-open>
+            Sign in or create an account
+          </button>
+        </div>
+
+        <div class="hidden" id="plantsContent">
+          <form id="addPlantForm" class="plant-form hidden">
+            <h3>Add a plant</h3>
+            <div class="plant-form-grid">
+              <label>Name
+                <input id="plantNameInput" type="text" required maxlength="80" placeholder="e.g. Monty" />
+              </label>
+              <label>Species (optional)
+                <input id="plantSpeciesInput" type="text" maxlength="80" placeholder="e.g. Monstera deliciosa" />
+              </label>
+              <label>Water every
+                <select id="plantIntervalInput">
+                  <option value="3">3 days</option>
+                  <option value="5">5 days</option>
+                  <option value="7" selected>7 days</option>
+                  <option value="10">10 days</option>
+                  <option value="14">14 days</option>
+                  <option value="21">21 days</option>
+                  <option value="30">30 days</option>
+                </select>
+              </label>
+              <label class="plant-form-notes">Notes (optional)
+                <textarea id="plantNotesInput" maxlength="2000" rows="2" placeholder="Where it lives, pot size, anything you notice..."></textarea>
+              </label>
+            </div>
+            <p class="form-error hidden" id="addPlantError"></p>
+            <div class="plant-form-actions">
+              <button type="submit" class="button-primary" id="addPlantSubmit">Add plant</button>
+              <button type="button" class="button-secondary" id="cancelAddPlant">Cancel</button>
+            </div>
+          </form>
+
+          <div class="plants-grid" id="plantsGrid"></div>
+
+          <div class="plants-empty hidden" id="plantsEmpty">
+            <p>No plants yet.</p>
+            <p class="plants-empty-hint">
+              Add one manually, or identify a photo on the
+              <button type="button" class="link-button" data-route="find">Plant Finder</button>
+              page and save it here.
+            </p>
+          </div>
+
+          <section class="plant-detail hidden" id="plantDetail"></section>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal-overlay hidden" id="authOverlay">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+        <button class="modal-close" id="authClose" type="button" aria-label="Close">×</button>
+        <h2 id="authModalTitle">Welcome to PlantPal</h2>
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" id="signInTab">Sign in</button>
+          <button type="button" class="auth-tab" id="signUpTab">Create account</button>
+        </div>
+
+        <form id="signInForm">
+          <label>Email
+            <input type="email" id="signInEmail" required autocomplete="email" />
+          </label>
+          <label>Password
+            <input type="password" id="signInPassword" required autocomplete="current-password" />
+          </label>
+          <p class="form-error hidden" id="signInError"></p>
+          <button type="submit" class="button-primary" id="signInSubmit">Sign in</button>
+        </form>
+
+        <form id="signUpForm" class="hidden">
+          <label>Name
+            <input type="text" id="signUpName" required maxlength="80" autocomplete="name" />
+          </label>
+          <label>Email
+            <input type="email" id="signUpEmail" required autocomplete="email" />
+          </label>
+          <label>Password
+            <input type="password" id="signUpPassword" required minlength="8" autocomplete="new-password" />
+          </label>
+          <p class="form-error hidden" id="signUpError"></p>
+          <button type="submit" class="button-primary" id="signUpSubmit">Create account</button>
+        </form>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
