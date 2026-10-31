@@ -1,4 +1,9 @@
-const backendUrl = "https://plantpal-backend-dpjw.onrender.com";
+import "./style.css";
+
+// Set VITE_API_URL when the frontend is deployed separately from the API.
+// Locally the value stays empty, so requests go to the Vite dev server and
+// are proxied to the Express backend (see vite.config.js).
+const backendUrl = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
 
 // Only the most recent turns are sent to the server to keep requests small.
 const MAX_CHAT_HISTORY = 12;

@@ -310,7 +310,7 @@ h3 {
   display: flex;
   align-items: center;
   padding: 56px clamp(24px, 7vw, 96px);
-  background: url("assets/landing-bg.jpg") center 48% / cover no-repeat;
+  background: url("/assets/landing-bg.jpg") center 48% / cover no-repeat;
 }
 
 .landing-frame::before {
